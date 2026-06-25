@@ -1,4 +1,4 @@
-### Test API
+### Test API avec REST Client
 
 GET http://localhost:3000/
 
@@ -20,3 +20,60 @@ Content-Type: application/json
     "email": "jean@email.com",
     "telephone": "0601020304"
 }
+
+###
+
+POST http://localhost:3000/api/trips
+Content-Type: application/json
+
+{
+    "lead_id": "3b174013-10c7-463f-b01c-eb9fe6e34dd9",
+    "depart": "Paris",
+    "arrivee": "Lyon",
+    "date_trajet": "2026-07-20",
+    "nb_passagers": 50,
+    "aller_retour": true,
+    "distance_km": 465,
+    "special_request": false,
+    "status": "PENDING"
+}
+
+###
+
+POST http://localhost:3000/api/quotes
+Content-Type: application/json
+
+{
+    "trip_id":"ea021bbd-3456-47f6-b967-d00eede7f5f3",
+    "distance":465,
+    "aller_retour":true,
+    "date_trajet":"2026-07-20",
+    "nb_passagers":50
+}
+
+###
+
+POST http://localhost:3000/api/generate-quote
+Content-Type: application/json
+
+{
+  "nom": "Jean Dupont",
+  "email": "jean@email.com",
+  "telephone": "0601020304",
+
+  "depart": "Paris",
+  "arrivee": "Lyon",
+
+  "date_trajet": "2026-07-20",
+
+  "nb_passagers": 50,
+
+  "aller_retour": true,
+
+  "distance_km": 465,
+
+  "special_request": false,
+
+  "special_request_comment": ""
+}
+
