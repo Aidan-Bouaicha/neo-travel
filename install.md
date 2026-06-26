@@ -147,6 +147,7 @@ Le backend est correctement installé si les endpoints suivants fonctionnent :
 * `POST /api/generate-quote`
 
 Les données doivent être enregistrées dans Supabase et un fichier PDF doit être généré dans le dossier `uploads`.
+le dossier se trouve dans le backend
 
 ---
 

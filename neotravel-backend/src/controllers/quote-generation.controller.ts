@@ -3,6 +3,7 @@ import { LeadService } from "../services/lead.service";
 import { TripService } from "../services/trip.service";
 import { QuoteService } from "../services/quote.service";
 import { PdfService } from "../services/pdf.service";
+import { MailService } from "../services/mail.service";
 
 export class QuoteGenerationController {
   static async generateQuote(
@@ -72,7 +73,13 @@ export class QuoteGenerationController {
         prix,
       });
 
-      // 6. Réponse
+      // 6. Envoi du mail
+      await MailService.sendQuoteEmail(
+        email,
+        quote.quote_number
+      );
+
+      // 7. Réponse
       res.status(201).json({
         success: true,
         message: "Devis généré avec succès",
@@ -81,10 +88,13 @@ export class QuoteGenerationController {
           trip,
           quote,
           pdf: pdfPath,
+          emailSent: true,
         },
       });
 
     } catch (error) {
+      console.error(error);
+
       res.status(500).json({
         success: false,
         message: "Erreur lors de la génération du devis",
