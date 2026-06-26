@@ -1,4 +1,4 @@
-# Installation du projet NeoTravel Backend
+# Installation du Backend NeoTravel
 
 ## 1. Cloner le projet
 
@@ -6,7 +6,7 @@
 git clone <url-du-repository>
 ```
 
-Puis entrer dans le projet :
+Entrer dans le dossier :
 
 ```bash
 cd neotravel-backend
@@ -14,44 +14,45 @@ cd neotravel-backend
 
 ---
 
-# 2. Installer les dépendances
-
-Installer tous les packages nécessaires :
+## 2. Installer les dépendances
 
 ```bash
 npm install
 ```
 
-Cela installera automatiquement toutes les dépendances définies dans le `package.json`.
-
 ---
 
-# 3. Créer le fichier `.env`
+## 3. Créer le fichier `.env`
 
-Créer un fichier `.env` à la racine du projet.
+Créer un fichier `.env` à la racine du backend.
 
-Ajouter les variables suivantes :
+Ajouter :
 
 ```env
 SUPABASE_URL=VOTRE_URL_SUPABASE
 SUPABASE_ANON_KEY=VOTRE_ANON_KEY_SUPABASE
 
+MAIL_USER=VOTRE_ADRESSE_GMAIL
+MAIL_PASS=VOTRE_MOT_DE_PASSE_APPLICATION
+
 PORT=3000
-```
-
-Les clés Supabase sont disponibles dans :
-
-```
-Supabase
-→ Project Settings
-→ API
 ```
 
 ---
 
-# 4. Vérifier la connexion Supabase
+## 4. Configuration Gmail
 
-Lancer le serveur :
+Pour permettre l'envoi automatique des devis :
+
+* Activer la validation en deux étapes sur le compte Gmail.
+* Générer un **mot de passe d'application**.
+* Copier ce mot de passe dans `MAIL_PASS`.
+
+⚠️ Le mot de passe du compte Gmail ne fonctionne pas.
+
+---
+
+## 5. Lancer le projet
 
 ```bash
 npm run dev
@@ -65,11 +66,11 @@ Le terminal doit afficher :
 
 ---
 
-# 5. Tester l'API
+## 6. Tester l'API
 
-Le projet contient des fichiers REST Client permettant de tester les endpoints.
+Les requêtes REST Client permettent de tester les endpoints.
 
-Exemple :
+Le principal est :
 
 ```http
 POST /api/generate-quote
@@ -77,19 +78,19 @@ POST /api/generate-quote
 
 ---
 
-# 6. Génération des PDF
+## 7. Génération des PDF
 
-Les devis PDF sont automatiquement enregistrés dans :
+Les devis sont automatiquement enregistrés dans :
 
 ```
 neotravel-backend/uploads/
 ```
 
-Le dossier est créé automatiquement au premier devis.
+Le dossier est créé automatiquement lors du premier devis.
 
 ---
 
-# Commandes utiles
+## Commandes utiles
 
 Installer les dépendances :
 
@@ -103,7 +104,7 @@ Lancer le serveur :
 npm run dev
 ```
 
-Compiler le projet :
+Compiler :
 
 ```bash
 npm run build
@@ -117,42 +118,35 @@ npm start
 
 ---
 
-# Dépendances principales
-
-Le projet utilise notamment :
+## Dépendances principales
 
 * Express
 * TypeScript
 * Supabase
-* pdf-lib
+* Nodemailer
+* PDF-lib
 * fs-extra
 * dotenv
-* cors
-
-Toutes les dépendances sont installées automatiquement avec :
-
-```bash
-npm install
-```
 
 ---
 
-# Vérification
+## Vérification
 
-Le backend est correctement installé si les endpoints suivants fonctionnent :
+L'installation est correcte si :
 
-* `POST /api/leads`
-* `POST /api/trips`
-* `POST /api/quotes`
-* `POST /api/generate-quote`
+* le serveur démarre ;
+* la connexion à Supabase fonctionne ;
+* un appel à `/api/generate-quote` :
 
-Les données doivent être enregistrées dans Supabase et un fichier PDF doit être généré dans le dossier `uploads`.
-le dossier se trouve dans le backend
+  * crée les données en base ;
+  * génère un PDF ;
+  * envoie le devis par email.
 
 ---
 
-# Remarques
+## Remarques
 
-* Le dossier `uploads/` est créé automatiquement lors de la génération du premier devis.
+* Le dossier `uploads/` est créé automatiquement.
+* Le dossier `uploads/` ne doit pas être versionné.
 * Le fichier `.env` ne doit jamais être versionné sur GitHub.
-* Avant de lancer le projet, vérifier que les clés Supabase sont correctement renseignées.
+* Vérifier que les clés Supabase et Gmail sont correctement renseignées avant le lancement.
