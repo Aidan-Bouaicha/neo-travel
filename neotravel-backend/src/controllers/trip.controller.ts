@@ -1,73 +1,73 @@
 import { Request, Response } from "express";
-import { LeadService } from "../services/lead.service";
+import { TripService } from "../services/trip.service";
 
-export class LeadController {
+export class TripController {
   /**
-   * Récupère tous les leads
+   * Récupère tous les trips
    */
   static async getAll(req: Request, res: Response): Promise<void> {
     try {
-      const leads = await LeadService.getAll();
+      const trips = await TripService.getAll();
 
       res.status(200).json({
         success: true,
-        data: leads,
-        count: leads.length,
+        data: trips,
+        count: trips.length,
       });
     } catch (error) {
       res.status(500).json({
         success: false,
-        message: "Erreur lors de la récupération des leads",
+        message: "Erreur lors de la récupération des trips",
         error: error instanceof Error ? error.message : error,
       });
     }
   }
 
   /**
-   * Récupère un lead par son ID
+   * Récupère un trip par son ID
    */
   static async getById(req: Request, res: Response): Promise<void> {
     try {
       const id = req.params.id as string;
-      const lead = await LeadService.getById(id);
+      const trip = await TripService.getById(id);
 
-      if (!lead) {
+      if (!trip) {
         res.status(404).json({
           success: false,
-          message: "Lead non trouvé",
+          message: "Trip non trouvé",
         });
         return;
       }
 
       res.status(200).json({
         success: true,
-        data: lead,
+        data: trip,
       });
     } catch (error) {
       res.status(500).json({
         success: false,
-        message: "Erreur lors de la récupération du lead",
+        message: "Erreur lors de la récupération du trip",
         error: error instanceof Error ? error.message : error,
       });
     }
   }
 
   /**
-   * Crée un nouveau lead
+   * Crée un nouveau trip
    */
-  static async createLead(req: Request, res: Response): Promise<void> {
+  static async createTrip(req: Request, res: Response): Promise<void> {
     try {
-      const lead = await LeadService.createLead(req.body);
+      const trip = await TripService.createTrip(req.body);
 
       res.status(201).json({
         success: true,
-        message: "Lead créé avec succès",
-        data: lead,
+        message: "Trip créé avec succès",
+        data: trip,
       });
     } catch (error) {
       res.status(500).json({
         success: false,
-        message: "Erreur lors de la création du lead",
+        message: "Erreur lors de la création du trip",
         error: error instanceof Error ? error.message : error,
       });
     }
