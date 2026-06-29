@@ -2,6 +2,48 @@ import { supabase } from "../config/supabase";
 import { Trip } from "../types/trip.types";
 
 export class TripService {
+  /**
+   * Récupère tous les trips avec les infos du lead associé
+   */
+  static async getAll(): Promise<Trip[]> {
+    const { data, error } = await supabase
+      .from("trips")
+      .select(`
+        *,
+        lead:leads(nom, email)
+      `)
+      .order("created_at", { ascending: false });
+
+    if (error) {
+      throw new Error(error.message);
+    }
+
+    return data;
+  }
+
+  /**
+   * Récupère un trip par son ID
+   */
+  static async getById(id: string): Promise<Trip | null> {
+    const { data, error } = await supabase
+      .from("trips")
+      .select(`
+        *,
+        lead:leads(nom, email)
+      `)
+      .eq("id", id)
+      .single();
+
+    if (error) {
+      throw new Error(error.message);
+    }
+
+    return data;
+  }
+
+  /**
+   * Crée un nouveau trip
+   */
   static async createTrip(trip: Trip): Promise<Trip> {
     const { data, error } = await supabase
       .from("trips")

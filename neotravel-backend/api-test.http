@@ -1,4 +1,7 @@
 ### Test API avec REST Client
+### ======================================
+### HEALTH CHECKS
+### ======================================
 
 GET http://localhost:3000/
 
@@ -10,8 +13,21 @@ GET http://localhost:3000/health
 
 GET http://localhost:3000/health/database
 
+### ======================================
+### LEADS
+### ======================================
+
+### GET - Récupérer tous les leads
+GET http://localhost:3000/api/leads
+
 ###
 
+### GET - Récupérer un lead par ID
+GET http://localhost:3000/api/leads/3b174013-10c7-463f-b01c-eb9fe6e34dd9
+
+###
+
+### POST - Créer un lead
 POST http://localhost:3000/api/leads
 Content-Type: application/json
 
@@ -21,8 +37,21 @@ Content-Type: application/json
     "telephone": "0601020304"
 }
 
+### ======================================
+### TRIPS
+### ======================================
+
+### GET - Récupérer tous les trips
+GET http://localhost:3000/api/trips
+
 ###
 
+### GET - Récupérer un trip par ID
+GET http://localhost:3000/api/trips/ea021bbd-3456-47f6-b967-d00eede7f5f3
+
+###
+
+### POST - Créer un trip
 POST http://localhost:3000/api/trips
 Content-Type: application/json
 
@@ -38,8 +67,21 @@ Content-Type: application/json
     "status": "PENDING"
 }
 
+### ======================================
+### QUOTES
+### ======================================
+
+### GET - Récupérer tous les quotes
+GET http://localhost:3000/api/quotes
+
 ###
 
+### GET - Récupérer un quote par ID
+GET http://localhost:3000/api/quotes/QUOTE_ID_HERE
+
+###
+
+### POST - Créer un quote
 POST http://localhost:3000/api/quotes
 Content-Type: application/json
 
@@ -51,8 +93,11 @@ Content-Type: application/json
     "nb_passagers":50
 }
 
-###
+### ======================================
+### GÉNÉRATION COMPLÈTE DE DEVIS
+### ======================================
 
+### POST - Workflow complet (Lead + Trip + Quote + PDF + Email)
 POST http://localhost:3000/api/generate-quote
 Content-Type: application/json
 
@@ -60,20 +105,13 @@ Content-Type: application/json
   "nom": "Jean Dupont",
   "email": "jean@email.com",
   "telephone": "0601020304",
-
   "depart": "Paris",
   "arrivee": "Lyon",
-
   "date_trajet": "2026-07-20",
-
   "nb_passagers": 50,
-
   "aller_retour": true,
-
   "distance_km": 465,
-
   "special_request": false,
-
   "special_request_comment": ""
 }
 

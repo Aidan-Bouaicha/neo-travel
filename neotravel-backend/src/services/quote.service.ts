@@ -13,6 +13,57 @@ import { Quote } from "../types/quote.types";
 export class QuoteService {
 
   /**
+   * Récupère tous les quotes avec les infos du trip associé
+   */
+  static async getAll(): Promise<Quote[]> {
+    const { data, error } = await supabase
+      .from("quotes")
+      .select(`
+        *,
+        trip:trips(
+          depart,
+          arrivee,
+          date_trajet,
+          nb_passagers,
+          lead:leads(nom, email)
+        )
+      `)
+      .order("created_at", { ascending: false });
+
+    if (error) {
+      throw new Error(error.message);
+    }
+
+    return data;
+  }
+
+  /**
+   * Récupère un quote par son ID
+   */
+  static async getById(id: string): Promise<Quote | null> {
+    const { data, error } = await supabase
+      .from("quotes")
+      .select(`
+        *,
+        trip:trips(
+          depart,
+          arrivee,
+          date_trajet,
+          nb_passagers,
+          lead:leads(nom, email)
+        )
+      `)
+      .eq("id", id)
+      .single();
+
+    if (error) {
+      throw new Error(error.message);
+    }
+
+    return data;
+  }
+
+  /**
    * Calcul du prix de base
    */
   static calculateBasePrice(distance: number): number {
